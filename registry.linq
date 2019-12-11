@@ -27,3 +27,5 @@ valueKind.Dump();
 myKey.SetValue(registeryKeyValue, registeryNewValue, valueKind);
 
 //myKey.SetValue(registeryKeyValue, registeryNewValue, myKey.GetValueKind(registeryKeyValue));
+
+Registry.ClassesRoot.GetSubKeyNames().Contains("KXCardReaderLib.KXCardReader").Dump();
