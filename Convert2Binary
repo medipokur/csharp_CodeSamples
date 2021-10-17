@@ -1,0 +1,81 @@
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+
+namespace BinaryConverter
+{
+    public partial class Form1 : Form
+    {
+        private string folderPath;
+
+        private List<FileInfo> files;
+
+        public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            openFileDialog1.Filter = "Belgeler|*.jpg;*.png;*.pdf";
+            openFileDialog1.Multiselect = true;
+
+            DialogResult dialogResult = folderBrowserDialog1.ShowDialog();
+
+            if (dialogResult == DialogResult.OK)
+            {
+                folderPath = folderBrowserDialog1.SelectedPath;
+
+                GetFiles(folderPath);
+            }
+        }
+
+        private void GetFiles(string path)
+        {
+            DirectoryInfo di = new DirectoryInfo(path);
+
+            files = di.GetFiles().Where(p => p.Extension == ".jpg" || p.Extension == ".pdf" || p.Extension.Equals(".png", StringComparison.OrdinalIgnoreCase)).ToList();
+
+            files.ForEach(p => listBox1.Items.Add(p.Name));
+        }
+
+        private void convertButton_Click(object sender, EventArgs e)
+        {   
+            foreach(FileInfo fi in files)
+            {
+                listBox2.Items.Add(ConvertFile(fi.FullName, fi.Name));                   
+            }
+        }
+
+        private string ConvertFile(string filePath, string fileName)
+        {
+            string newFileName = GetFileNameWithoutExtension(fileName) + "_binary" + ".txt";
+
+            byte[] bytes = System.IO.File.ReadAllBytes(filePath);
+
+            string s = Convert.ToBase64String(bytes);
+
+            using (StreamWriter sw = File.CreateText(newFileName))
+            {
+                sw.Write(s);
+                sw.Flush();
+            }
+
+            return newFileName;
+        }
+
+        private string GetFileNameWithoutExtension(string fileName)
+        {
+            int dotIndex = fileName.LastIndexOf('.');
+
+            return fileName.Substring(0, dotIndex);
+        }
+    }
+}
