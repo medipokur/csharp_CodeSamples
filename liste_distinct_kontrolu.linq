@@ -1,8 +1,20 @@
-<Query Kind="Statements" />
-
-var lstNames = new List<string> { "A", "B", "A" };
-
-if (lstNames.Distinct().Count() != lstNames.Count())
+void Main()
 {
-    Console.WriteLine("List contains duplicate values.");
+	List<string> liste = new List<string> { "A", "B", "A" };
+	
+	if (liste.HasDuplicateValues()){
+		Console.WriteLine("list has duplicate values!");
+	}
+}
+
+public static class Extensions{
+public static bool HasDuplicateValues<T>(this IEnumerable<T> enumerable){
+
+	if (enumerable.Distinct().Count() != enumerable.Count())
+	{
+		return true;
+	}
+	
+	return false;
+}
 }
