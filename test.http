@@ -1,0 +1,8 @@
+//GET https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/currency-codes/records?where=entity=%22TURKEY%22
+GET https://public.opendatasoft.com/api/explore/v2.1/catalog/datasets/currency-codes/records?where=alphabeticcode=%22USD%22
+Content-Type: application/json 
+# {
+#   "grantType":"client_credentials"
+#   "clientId":"abc"
+#   "clientSecret":"4354"
+# }
