@@ -1,0 +1,9 @@
+var query = liste.GroupBy(p => p.City).Where(g => g.Count() >= 5).OrderByDescending(g => g.Count()).Select(g => new {g.Key, Adet = g.Count()});
+
+query.Dump();
+
+from b in liste
+group b by b.City into g 
+where g.Count() >= 5
+orderby g.Count() descending
+select new {g.Key, Adet = g.Count()}
